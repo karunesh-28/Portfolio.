@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+@theme {
+  /* ══════════════════════════════════════════════════════════════════
+     ULTRA-IMMERSIVE CYBERPUNK / DEFCON HACKER PALETTE
+     Deep Obsidian + Laser Cyan + Electric Violet + Threat Amber
+  ══════════════════════════════════════════════════════════════════ */
+  --color-cyber-bg:           #020408;   /* True pitch black obsidian */
+  --color-cyber-panel:        #050912;   /* Deep midnight HUD panel */
+  --color-cyber-panel-light:  #0a101f;   /* Lighter HUD container */
+  --color-cyber-cyan:         #00f0ff;   /* Vivid Laser Neon Cyan */
+  --color-cyber-cyan-dim:     #0098a6;   /* Muted laser cyan */
+  --color-cyber-blue:         #38bdf8;   /* Ice Blue */
+  --color-cyber-purple:       #a855f7;   /* Electric Neon Violet */
+  --color-cyber-purple-dim:   #7e22ce;   /* Deep ultraviolet */
+  --color-cyber-amber:        #ff9f1c;   /* Threat telemetry amber */
+  --color-cyber-crimson:      #ff2a5f;   /* Critical threat crimson */
+  --color-cyber-border:       #0d223a;   /* Tech border */
+  --color-cyber-border-glow:  rgba(0, 240, 255, 0.45);
+  --color-cyber-text-main:    #e2e8f0;   /* Bright white-cyan text */
+  --color-cyber-text-muted:   #64748b;   /* Muted steel-slate */
+
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
+
+  --animate-cursor-blink:  blink 1s step-end infinite;
+  --animate-glow-pulse:    glow-pulse 2.5s infinite ease-in-out;
+  --animate-scanline:      scanline 8s linear infinite;
+  --animate-flicker:       flicker 8s linear infinite;
+  --animate-glitch:        glitch 3.5s infinite;
+  --animate-laser-sweep:   laser-sweep 4s ease-in-out infinite;
+
+  @keyframes blink {
+    from, to { border-color: transparent; }
+    50%       { border-color: #00f0ff; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(0,240,255,0.25), 0 0 30px rgba(0,240,255,0.08);
+      border-color: rgba(0,240,255,0.4);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(0,240,255,0.55), 0 0 60px rgba(0,240,255,0.22);
+      border-color: rgba(0,240,255,0.85);
+    }
+  }
+  @keyframes scanline {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+  @keyframes laser-sweep {
+    0%, 100% { transform: translateY(-100%); opacity: 0; }
+    50%      { transform: translateY(100%); opacity: 0.6; }
+  }
+  @keyframes flicker {
+    0%,94%,100% { opacity: 1; }
+    95%  { opacity: 0.75; }
+    96%  { opacity: 1;    }
+    97%  { opacity: 0.5;  }
+    98%  { opacity: 1;    }
+  }
+  @keyframes glitch {
+    0%, 100% { transform: none; opacity: 1; }
+    92% { transform: none; opacity: 1; }
+    93% { transform: skewX(-4deg) translate(-2px, 1px); filter: drop-shadow(2px 0 #ff2a5f); }
+    94% { transform: skewX(4deg) translate(2px, -1px); filter: drop-shadow(-2px 0 #00f0ff); }
+    95% { transform: none; }
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: #020408; }
+::-webkit-scrollbar-thumb { background: #0d223a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,240,255,0.7); }
+
+/* ── Base ── */
+body {
+  background-color: #020408;
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* ── Cyber HUD background grids & Circuit Patterns ── */
+.bg-cyber-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right,  rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+}
+
+.bg-cyber-dots {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(0, 240, 255, 0.18) 1px, transparent 1px);
+}
+
+/* ── Glow text & accents ── */
+.text-glow-cyan {
+  text-shadow: 0 0 16px rgba(0, 240, 255, 0.6), 0 0 35px rgba(0, 240, 255, 0.25);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 16px rgba(168, 85, 247, 0.6), 0 0 35px rgba(168, 85, 247, 0.25);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 16px rgba(255, 159, 28, 0.6);
+}
+
+/* ── Framer-Grade Luxury Glassmorphism & Cyber Panels ── */
+.cyber-hud-card {
+  position: relative;
+  background: rgba(6, 11, 22, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.18);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-hud-card:hover {
+  border-color: rgba(0, 240, 255, 0.55);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 240, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+/* Cyber Folder Tabs for Skills & Tools */
+.cyber-folder-tab {
+  position: relative;
+  background: rgba(8, 14, 28, 0.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 240, 255, 0.04);
+  transition: all 0.25s ease;
+}
+
+.cyber-folder-tab:hover {
+  border-color: rgba(0, 240, 255, 0.65);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 240, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Project Cards */
+.cyber-project-card {
+  position: relative;
+  background: rgba(6, 11, 22, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.03);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-project-card:hover {
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 240, 255, 0.18);
+  transform: translateY(-4px);
+}
+
+/* Cyber Button Styling */
+.cyber-btn-cyan {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.18), rgba(0, 240, 255, 0.05));
+  border: 1px solid rgba(0, 240, 255, 0.7);
+  color: #00f0ff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-btn-cyan:hover {
+  background: #00f0ff;
+  color: #020408;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.65);
+  transform: translateY(-1px);
+}
+
+.cyber-btn-purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(168, 85, 247, 0.05));
+  border: 1px solid rgba(168, 85, 247, 0.7);
+  color: #a855f7;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-btn-purple:hover {
+  background: #a855f7;
+  color: #020408;
+  box-shadow: 0 0 35px rgba(168, 85, 247, 0.65);
+  transform: translateY(-1px);
+}
+
+/* ── Scanline & CRT TV overlay effect ── */
+.terminal-screen { position: relative; overflow: hidden; }
+.terminal-screen::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+.terminal-scanline {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 60px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0,240,255,0.08) 50%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 11;
+  animation: var(--animate-scanline);
+}
+
+/* ── Hacker Operative Avatar & Frames ── */
+.cyber-avatar-container {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.2), 0 15px 45px rgba(0, 0, 0, 0.85);
+}
+
+.cyber-avatar-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: inset 0 0 25px rgba(0, 240, 255, 0.15);
+}
+
+.cyber-scanner-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f0ff, #ffffff, #00f0ff, transparent);
+  box-shadow: 0 0 15px #00f0ff;
+  animation: laser-sweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* ── Section Backgrounds & Visible Rich Artwork ── */
+.hacker-bg-canvas {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0.38;
+  mix-blend-mode: screen;
+  filter: contrast(115%) brightness(105%) saturate(125%);
+}
+
+.hacker-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(2, 4, 8, 0.35) 0%, rgba(2, 4, 8, 0.88) 100%);
+  pointer-events: none;
+}
+
+.hacker-gradient-edges {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #020408 0%, transparent 14%, transparent 86%, #020408 100%);
+  pointer-events: none;
+}
+
+/* ── Smooth Scroll ── */
+html { scroll-behavior: smooth; }
+
